@@ -24,7 +24,7 @@ public class TestOneToOne {
 		dbManager.close(); 		
 	}
 	
-	//@Test
+	@Test
 	public void testInsert(){	
 		Address address = getMockAddress("Calle test", 3306);
 		Employee employee =getMockEmployee("Pedro","Picapiedra"); 
@@ -44,13 +44,9 @@ public class TestOneToOne {
 	@Test
 	public void testUpdat(){	
 		Address address = getMockAddress("Calle test", 3306);
-		Employee employee =getMockEmployee("Pedro","Picapiedra"); 
-		
+		Employee employee =getMockEmployee("Pedro","Picapiedra"); 	
 		employee.setAdress(address);
-		
-		
-		
-		
+
 		dbManager.connect();
 			dbManager.insert(employee);
 		dbManager.close(); 	
@@ -93,7 +89,7 @@ public class TestOneToOne {
 	
 	
 	
-	//@Test
+	@Test
 	public void testSelect(){	
 		Address address = getMockAddress("Calle test", 3306);
 		Employee employee =getMockEmployee("Pedro","Picapiedra"); 
@@ -123,10 +119,6 @@ public class TestOneToOne {
 		Assert.assertEquals(1,list.size());
 		Assert.assertEquals("Girona",list.get(0).getAddress().getCity());		
 	}
-	
-	
-	
-	
 	
 	
 	
