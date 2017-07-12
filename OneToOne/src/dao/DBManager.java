@@ -40,32 +40,30 @@ public class DBManager {
 	
 	EntityManager entitymanager; 
 	
+	
+
+
+
 	public static EntityManagerFactory getEMF(){ 
 		factory = factory==null? Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME)
 				: factory;
 		return factory; 
 	}
 	
+	public EntityManager getEntitymanager() {
+		return entitymanager;
+	}
 	
-
 	public void connect() {
 		entitymanager = getEMF().createEntityManager();
 	}
 
-	public void insert(Object object){			  
+	public void insert(Object object){		  
 		entitymanager.getTransaction().begin();
 			entitymanager.persist(object);
 		entitymanager.getTransaction().commit(); 
 	}
-
-
-	public void update(Object object) {
-		entitymanager.getTransaction().begin();
-		entitymanager.persist(object);
-		entitymanager.getTransaction().commit();
-	}
-
-
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Object find(Class clazz , int id)  {
 		entitymanager.getTransaction().begin();
@@ -74,17 +72,14 @@ public class DBManager {
 		return object;
 	}
 
-
-	
-	@SuppressWarnings("rawtypes")
-	public void deleteAll(Class clazz){
+	public <T> void deleteAll(Class<T> clazz){
 		entitymanager.getTransaction().begin();
-		entitymanager.createQuery("DELETE FROM "+clazz.getSimpleName())
-				.executeUpdate(); 
+		ArrayList<T> list = selectAll(clazz);
+		
+			for(T object: list)
+				entitymanager.remove(object); 
 		entitymanager.getTransaction().commit();
 	}
-	
-	
 	
 	@SuppressWarnings("unchecked")
 	public <T> ArrayList<T> selectAll(Class<T> clazz){

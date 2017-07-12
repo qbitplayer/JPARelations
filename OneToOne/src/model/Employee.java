@@ -50,7 +50,7 @@ public class Employee {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public Address getAdress() {
+	public Address getAddress() {
 		return address;
 	}
 	public void setAdress(Address adress) {
