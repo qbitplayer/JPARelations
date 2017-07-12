@@ -1,6 +1,8 @@
 package test;
 
 
+import java.util.ArrayList;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +12,7 @@ import model.Address;
 
 import model.Employee;
 
-public class testOneToOne {
+public class TestOneToOneOwner {
 	DBManager dbManager; 
 	Employee employee; 
 	
@@ -27,17 +29,31 @@ public class testOneToOne {
 		Address address = getMockAddress("Calle test", 3306);
 		Employee employee =getMockEmployee("Pedro","Picapiedra"); 
 		
-		employee.setAdress(address);
 		
-		dbManager.connect();
-			dbManager.insert(employee);
-			employee.getAdress(); 
+		dbManager.connect();		
+			dbManager.getEntitymanager().getTransaction().begin();			
+			employee.setAdress(address);
+			dbManager.getEntitymanager().persist(employee);		
+			//Asignar explicitamente la referencia
+			employee.getAdress().setEmployee(employee); 			
+			dbManager.getEntitymanager().getTransaction().commit();		
 		dbManager.close(); 
 		
 		Assert.assertEquals(true,employee.getId()>0);
 		Assert.assertEquals(true,employee.getAdress().getId()>0);		
+	
+		dbManager.connect();
+				ArrayList<Address> list = dbManager
+						.selectEqual(Address.class, "employee.name", "Pedro");  
+		dbManager.close(); 
+		 
+		Assert.assertEquals(1,list.size());		
+	
 	}
 
+	
+	
+	
 	private Employee getMockEmployee(String name, String surname) {
 		 Employee employee = new Employee();
 		 employee.setName(name);

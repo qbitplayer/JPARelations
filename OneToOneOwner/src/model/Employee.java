@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class Employee {
@@ -20,10 +21,10 @@ public class Employee {
 	private String surname;
 	
 	
-	@OneToOne(fetch=FetchType.LAZY,
+	@OneToOne(
 			cascade={CascadeType.PERSIST,CascadeType.REMOVE},
 			optional=false)
-    @JoinColumn(name = "address_id")
+	//@PrimaryKeyJoinColumn
 	private Address address; 
 	
 	

@@ -18,9 +18,19 @@ public class Address {
 	private String zipCode; 
 	private String city;
 	
-	@OneToOne(fetch=FetchType.LAZY, mappedBy="address")
+	@OneToOne(mappedBy="address", 
+				optional=false)
 	private Employee employee; 
 	
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
 	public int getId() {
 		return id;
 	} 
@@ -50,7 +60,6 @@ public class Address {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	
 
 	
 	
