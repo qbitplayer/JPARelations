@@ -34,6 +34,7 @@ public class Employee {
 	@ManyToOne(fetch=FetchType.LAZY,
 			cascade={CascadeType.PERSIST,CascadeType.REMOVE},
 			optional=false)
+	 // @JoinColumn(name = "departament_id")
 	private Departament departament; 
 	
 	
