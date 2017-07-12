@@ -52,13 +52,14 @@ public class TestOneToMany {
 			
 			    dbManager.getEntityManager().persist(employee);
 			    
-			    
-					employee.getComments().add(comment1); 
+					employee.getComments().add(comment1);
+						comment1.setEmployee(employee); // explicito 
 					employee.getComments().add(comment2); 
+						comment2.setEmployee(employee); 
 					employee.getComments().add(comment3); 
+						comment3.setEmployee(employee); 
 					employee.getComments().add(comment4); 					
-		    
-					
+						comment4.setEmployee(employee); 
 					
 			dbManager.getEntityManager().getTransaction().commit();
 			

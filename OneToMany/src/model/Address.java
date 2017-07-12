@@ -1,6 +1,5 @@
 package model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,7 +11,6 @@ import javax.persistence.OneToOne;
 public class Address { 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ADDRESS_ID")
 	private int id;
 	
 	private String street; 
@@ -20,7 +18,7 @@ public class Address {
 	private String zipCode; 
 	private String city;
 	
-	@OneToOne(fetch=FetchType.LAZY, mappedBy="address")
+	@OneToOne(mappedBy="address")
 	private Employee employee; 
 	
 	

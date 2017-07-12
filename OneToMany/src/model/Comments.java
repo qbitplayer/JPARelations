@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
@@ -33,18 +34,18 @@ public class Comments {
 		private String comments;
 		
 		
-		@ManyToOne(optional = false, cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+		@ManyToOne(cascade=CascadeType.ALL)
+		@JoinColumn(name="employee_id")
 		private Employee employee; 
-		
-		
+				
+	
 		@Transient
 		private String rate; 
 		
 		public Comments(){
-			setId(-1); 
+			
 		}
-		
-	
+			
 		public String getEmail() {
 			return email;
 		}
@@ -107,6 +108,14 @@ public class Comments {
 
 		public void setRate(String rate) {
 			this.rate = rate;
+		}
+		
+		public Employee getEmployee() {
+			return employee;
+		}
+
+		public void setEmployee(Employee employee) {
+			this.employee = employee;
 		}
 		
 }

@@ -22,24 +22,30 @@ public class Employee {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	//@Column(name = "EMPLOYEE_ID")
 	private int id;
 	
 	private String name; 
 	private String surname;
 	
-	//Relacion ono a uno, este es el propietario de la relacion
-	@OneToOne(fetch=FetchType.LAZY,
-			cascade={CascadeType.PERSIST,CascadeType.REMOVE},
-			optional=false)
-	private Address address; 
+
+	//Por defecto el join columna sera creada como address_id
+	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE},
+					optional=false)
+	private Address address;
 	
-	 @ManyToOne(optional=false, cascade={CascadeType.PERSIST,CascadeType.REMOVE})
+	
+	 //Por defecto el join columna sera creada como departament_id
+	 @ManyToOne(optional=false, 
+			 		cascade={CascadeType.PERSIST,CascadeType.REMOVE})
 	 private Departament departament; 
 
-	 @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+	 //mappedBy No es el dueño de la relacion por lo tanto no crea join columna 
+	 @OneToMany(mappedBy = "employee", 
+			 	cascade = CascadeType.ALL)
 	 private List<Comments> comments = new ArrayList<Comments>();
 	
+	 
+	 
 	public List<Comments> getComments() {
 		return comments;
 	}

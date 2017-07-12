@@ -10,24 +10,24 @@ import javax.persistence.Query;
 
 /**
  * 
-Java Persistence API, más conocida por sus siglas JPA, es la API de persistencia 
+Java Persistence API, mï¿½s conocida por sus siglas JPA, es la API de persistencia 
 desarrollada para la plataforma Java EE. 
 
-Es un framework del lenguaje de programación Java que maneja datos relacionales 
+Es un framework del lenguaje de programaciï¿½n Java que maneja datos relacionales 
 en aplicaciones usando la Plataforma Java en sus ediciones Standard (Java SE) y
 Enterprise (Java EE). La JPA se origina a partir del trabajo del JSR 220 Expert
-Group el cual correspondía a EJB3. JPA 2.0 sería el trabajo del JSR 317 y 
+Group el cual correspondï¿½a a EJB3. JPA 2.0 serï¿½a el trabajo del JSR 317 y 
 posteriormente JPA 2.1 en el JSR 338.
 
-Persistencia en este contexto cubre tres áreas:
+Persistencia en este contexto cubre tres ï¿½reas:
 
-La API en sí misma, definida en el paquete javax.persistence
+La API en sï¿½ misma, definida en el paquete javax.persistence
 El lenguaje de consulta Java Persistence Query Language (JPQL).
 Metadatos objeto/relacional.
 
-El objetivo que persigue el diseño de esta API es no perder las ventajas de 
-la orientación a objetos al interactuar con una base de datos 
-(siguiendo el patrón de mapeo objeto-relacional), como sí pasaba con EJB2,
+El objetivo que persigue el diseï¿½o de esta API es no perder las ventajas de 
+la orientaciï¿½n a objetos al interactuar con una base de datos 
+(siguiendo el patrï¿½n de mapeo objeto-relacional), como sï¿½ pasaba con EJB2,
  y permitir usar objetos regulares (conocidos como POJOs).
  
  * @author campino
@@ -35,7 +35,7 @@ la orientación a objetos al interactuar con una base de datos
  */
 public class DBManager { 
 	
-	private static final String PERSISTENCE_UNIT_NAME = "comments"; 
+	private static final String PERSISTENCE_UNIT_NAME = "OneToMany"; 
 	private static EntityManagerFactory factory=null;
 	
 	EntityManager entitymanager; 
@@ -80,14 +80,14 @@ public class DBManager {
 
 
 	
-	@SuppressWarnings("rawtypes")
-	public void deleteAll(Class clazz){
+	public <T> void deleteAll(Class<T> clazz){
 		entitymanager.getTransaction().begin();
-		entitymanager.createQuery("DELETE FROM "+clazz.getSimpleName())
-				.executeUpdate();
+		ArrayList<T> list = selectAll(clazz);
+		
+			for(T object: list)
+				entitymanager.remove(object); 
 		entitymanager.getTransaction().commit();
 	}
-	
 	
 	
 	@SuppressWarnings("unchecked")
